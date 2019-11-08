@@ -19,12 +19,12 @@ const Jsx = () => (
 let hasRendered = false
 const renderApp = () => {
   if (!hasRendered) {
-    ReactDOM.render(<Jsx />, document.querySelector('#app'))
+    ReactDOM.render(<Jsx />, document.getElementById('app'))
     hasRendered = true
   }
 }
 
-ReactDOM.render(<LoadingPage />, document.querySelector('#app'))
+ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
