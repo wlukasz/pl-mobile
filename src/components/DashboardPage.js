@@ -9,62 +9,54 @@ export default class DashboardPage extends Component {
       email: ''
     }
   }
-  fetchUser(id) {
-    fetch(`api/fetchUser/${id}`)
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText)
-        }
-        return res.json()
-      })
-      .then( (user) => {
-        console.log(this)
-        console.log('FETCH', user)
+  async dbRequest(body) {
+    try {
+      let postData = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }
+      console.log('postData: ', postData)
+
+      const res = await fetch('api', postData)
+      if (!res.ok) {
+        throw Error(res.statusText)
+      }
+      const result = await res.json()
+      console.log('Generic FETCH', body.reqName, result)
+      return result
+    } catch(error) {
+      console.log('Generic FETCH Error', body.reqName, error)
+    } 
+  }
+  async componentDidMount() {
+    try {
+      let body = {
+        reqName: 'updateUser', // returns object
+        id: 12,
+        first_name: 'Wojciech'
+      }
+      await this.dbRequest(body)
+
+      body = {
+        reqName: 'fetchUser', // returns array
+        id: 12
+      }
+      const result = await this.dbRequest(body)
+      console.log('Result for fetchUser:', result)
+      result.map(user => {
         this.setState({ 
           firstName: user.first_name,
           lastName: user.last_name, 
           email: user.email 
-        })
+        })      
       })
-      .catch(error => console.log(error))
-  }
-  updateUser(id) {
-    // fetch POST
-    const url = `api/updateUser`
-    let body = {
-      id: 12,
-      firstName: 'Voytek',
-      email: 'namaste.w28@gmail.com'
+    } catch(error) {
+      console.log('Error caught in componentDidMount:', error)
     }
-    let postData = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    }
-    console.log('postData: ', postData)
-    fetch(url, postData)
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText)
-        }
-        return res.json()
-      })
-      .then( (result) => {
-        console.log(this)
-        console.log('UPDATE', result)
-        this.fetchUser(id)
-      })
-      .catch(error => console.log(error))
-  }
-  componentDidMount() {
-    // fetch user via mysql API
-    this.fetchUser(id)
-    // update (and fetch) user via mysql API
-    let id = 12
-    this.updateUser(id)
   }
   render() {
     return (
