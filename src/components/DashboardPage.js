@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import dbRequest from '../utils/dbRequest'
 
 export default class DashboardPage extends Component {
   constructor(props) {
@@ -9,44 +10,38 @@ export default class DashboardPage extends Component {
       email: ''
     }
   }
-  async dbRequest(body) {
-    try {
-      let postData = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      }
-      console.log('postData: ', postData)
-
-      const res = await fetch('api', postData)
-      if (!res.ok) {
-        throw Error(res.statusText)
-      }
-      const result = await res.json()
-      console.log('Generic FETCH', body.reqName, result)
-      return result
-    } catch(error) {
-      console.log('Generic FETCH Error', body.reqName, error)
-    } 
-  }
   async componentDidMount() {
     try {
+      // fetch user
       let body = {
+        reqName: 'fetchUser', // returns array
+        id: 12
+      }
+      const result1 = await dbRequest(body)
+      console.log('1. Result for fetchUser:', result1)
+      result1.map(user => {
+        this.setState({ 
+          firstName: user.first_name,
+          lastName: user.last_name, 
+          email: user.email 
+        })      
+      })
+
+      // update user name
+      body = {
         reqName: 'updateUser', // returns object
         id: 12,
         first_name: 'Wojciech'
       }
-      await this.dbRequest(body)
+      await dbRequest(body)
 
+      // fetch user again
       body = {
         reqName: 'fetchUser', // returns array
         id: 12
       }
-      const result = await this.dbRequest(body)
-      console.log('Result for fetchUser:', result)
+      const result = await dbRequest(body)
+      console.log('2. Result for fetchUser:', result)
       result.map(user => {
         this.setState({ 
           firstName: user.first_name,
