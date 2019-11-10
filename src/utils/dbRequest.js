@@ -1,6 +1,6 @@
 export default async (body) => {
   try {
-    let postData = {
+    const postData = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

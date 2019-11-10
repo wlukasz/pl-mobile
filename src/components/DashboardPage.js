@@ -7,26 +7,13 @@ export default class DashboardPage extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
+      isAuthenticated: undefined
     }
   }
   async componentDidMount() {
     try {
-      // fetch user
-      let body = {
-        reqName: 'fetchUser', // returns array
-        id: 12
-      }
-      const result1 = await dbRequest(body)
-      console.log('1. Result for fetchUser:', result1)
-      result1.map(user => {
-        this.setState({ 
-          firstName: user.first_name,
-          lastName: user.last_name, 
-          email: user.email 
-        })      
-      })
-
+      let body
       // update user name
       body = {
         reqName: 'updateUser', // returns object
@@ -35,24 +22,45 @@ export default class DashboardPage extends Component {
       }
       await dbRequest(body)
 
-      // fetch user again
+      // fetch user 
       body = {
         reqName: 'fetchUser', // returns array
         id: 12
       }
       const result = await dbRequest(body)
-      console.log('2. Result for fetchUser:', result)
+      console.log('Result for fetchUser:', result)
       result.map(user => {
-        this.setState({ 
+        this.setState({
+          ...this.state, 
           firstName: user.first_name,
           lastName: user.last_name, 
           email: user.email 
         })      
       })
+
+      //  verify user's password
+      body = {
+        reqName: 'fetchPassword', // returns object { isAuthenticated: true/false }
+        preProcess: 'testCase',
+        postProcess: 'verifyPassword',
+        email: 'namaste.w28@gmail.com',
+        plainPassword: 'test'
+      }
+      const passwordCheck = await dbRequest(body)
+      console.log('Result for fetchPassword:', passwordCheck)
+      this.setState({
+        ...this.state, 
+        isAuthenticated: passwordCheck.isAuthenticated 
+      })      
+
+      console.log('state:', this.state)
     } catch(error) {
       console.log('Error caught in componentDidMount:', error)
     }
   }
+
+
+
   render() {
     return (
       <div className="Users">

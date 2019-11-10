@@ -3,7 +3,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const publicPath = path.join(__dirname, '..', 'public')
 const dbPool = require('./db/connection')
-const distributor = require('./api/distributor')
+const dbSelector = require('./api/dbSelector')
+const preProcess = require('./api/preProcess')
+const postProcess = require('./api/postProcess')
+const nonDbProcess = require('./api/nonDbProcess')
+// const verifyPassword = require('./utils/verifyPassword')
 
 const app = express()
 const port = process.env.PORT || 4007
@@ -18,16 +22,25 @@ app.use(bodyParser.json({
 // Generic POST request
 app.post('/api', (req, res) => {
   console.log('req.body:', req.body)
-  const dbParams = distributor(req.body)
+  req.body = preProcess(req.body)
+  console.log('req.body:', req.body)
+  const dbParams = dbSelector(req.body)
   console.log('dbParams', dbParams)
-  dbPool.query(dbParams.sql, dbParams.inserts, (error, result, fields) => {
-    if (error) {
-      return console.log(error)
-    }
-      console.log('result:', result)
-      res.send(result)
+  if (dbParams === false) {
+    console.log('Error: Invalid db request!')
+    res.status(400).send({ error: 'Invalid db request!' })
+  } else {
+    dbPool.query(dbParams.sql, dbParams.inserts, (error, result, fields) => {
+      if (error) {
+        console.log('Database error:', error)
+        res.status(400).send({ error: `Database error: ${error}` })
+      } else {
+        console.log('result:', result)
+        res.send(postProcess(req.body, result))
+      }
     })
-  })
+  }
+})
 
 app.use(express.static(publicPath))
 
