@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import dbRequest from '../utils/dbRequest'
+import serverRequest from '../utils/serverRequest'
 
 export default class DashboardPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      uid: 0,
       firstName: '',
       lastName: '',
       email: '',
@@ -20,24 +21,8 @@ export default class DashboardPage extends Component {
         id: 12,
         first_name: 'Wojciech'
       }
-      await dbRequest(body)
-
-      // fetch user 
-      body = {
-        reqName: 'fetchUser', // returns array
-        id: 12
-      }
-      const result = await dbRequest(body)
-      console.log('Result for fetchUser:', result)
-      result.map(user => {
-        this.setState({
-          ...this.state, 
-          firstName: user.first_name,
-          lastName: user.last_name, 
-          email: user.email 
-        })      
-      })
-
+      await serverRequest(body)
+      
       //  verify user's password
       body = {
         reqName: 'fetchPassword', // returns object { isAuthenticated: true/false }
@@ -46,12 +31,27 @@ export default class DashboardPage extends Component {
         email: 'namaste.w28@gmail.com',
         plainPassword: 'test'
       }
-      const passwordCheck = await dbRequest(body)
-      console.log('Result for fetchPassword:', passwordCheck)
+      const passwordCheck = await serverRequest(body)
       this.setState({
         ...this.state, 
         isAuthenticated: passwordCheck.isAuthenticated 
       })      
+
+      // fetch user 
+      body = {
+        reqName: 'fetchUser', // returns array
+        id: 12
+      }
+      const result = await serverRequest(body)
+      result.map(user => {
+        this.setState({
+          ...this.state,
+          uid: user.id, 
+          firstName: user.first_name,
+          lastName: user.last_name, 
+          email: user.email 
+        })      
+      })
 
       console.log('state:', this.state)
     } catch(error) {

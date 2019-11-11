@@ -15,9 +15,9 @@ export default async (body) => {
       throw Error(res.statusText)
     }
     const result = await res.json()
-    console.log('Generic FETCH', body.reqName, result)
+    console.log('Generic FETCH in serverRequest.js', body.reqName, result)
     return result
   } catch(error) {
-    console.log('Generic FETCH Error', body.reqName, error)
+    console.log('Generic FETCH Error in serverRequest.js', body.reqName, error)
   } 
 }

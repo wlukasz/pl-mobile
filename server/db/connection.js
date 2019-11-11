@@ -1,4 +1,4 @@
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const dbCredentials = require('./credentials')
 
 // const dbConnection = mysql.createConnection(dbCredentials)
