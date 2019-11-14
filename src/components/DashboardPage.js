@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import serverRequest from '../utils/serverRequest'
 
-export default class DashboardPage extends Component {
+export default class DashboardPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,20 +22,6 @@ export default class DashboardPage extends Component {
         first_name: 'Wojciech'
       }
       await serverRequest(body)
-      
-      //  verify user's password
-      body = {
-        reqName: 'fetchPassword', // returns object { isAuthenticated: true/false }
-        preProcess: 'testCase',
-        postProcess: 'verifyPassword',
-        email: 'namaste.w28@gmail.com',
-        plainPassword: 'test'
-      }
-      const passwordCheck = await serverRequest(body)
-      this.setState({
-        ...this.state, 
-        isAuthenticated: passwordCheck.isAuthenticated 
-      })      
 
       // fetch user 
       body = {

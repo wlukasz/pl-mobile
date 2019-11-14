@@ -11,13 +11,13 @@ export default async (body) => {
     console.log('postData: ', postData)
 
     const res = await fetch('api', postData)
-    if (!res.ok) {
-      throw Error(res.statusText)
+    if (!res.ok) { // usually 504 (Gateway Timeout) - i.e. express server is down
+      throw Error('Node.js is down!', res.statusText)
     }
     const result = await res.json()
-    console.log('Generic FETCH in serverRequest.js', body.reqName, result)
+    console.log(`Generic FETCH in serverRequest.js; Request:${body.reqName}`, result)
     return result
   } catch(error) {
-    console.log('Generic FETCH Error in serverRequest.js', body.reqName, error)
+    console.log(`Generic FETCH Error in serverRequest.js; Request:${body.reqName}; ${error}`)
   } 
 }
