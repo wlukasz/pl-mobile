@@ -1,14 +1,12 @@
 import React from 'react'
-import moment from 'moment'
-// import 'react-dates/initialize'
 
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      email: props.auth ? props.auth.email : '',
-      password: props.auth ? props.auth.password : '',
+      email: '',
+      password: '',
       error: ''
     }
   }

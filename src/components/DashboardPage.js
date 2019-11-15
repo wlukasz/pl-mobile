@@ -8,8 +8,7 @@ export default class DashboardPage extends React.Component {
       uid: 0,
       firstName: '',
       lastName: '',
-      email: '',
-      isAuthenticated: undefined
+      email: ''
     }
   }
   async componentDidMount() {
@@ -39,7 +38,7 @@ export default class DashboardPage extends React.Component {
         })      
       })
 
-      console.log('state:', this.state)
+      console.log('DashboardPage after fetchUser state:', this.state)
     } catch(error) {
       console.log('Error caught in componentDidMount:', error)
     }

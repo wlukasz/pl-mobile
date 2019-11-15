@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
-import { startLoginMysql, loginMysql } from '../actions/login';
+import { startLoginMysql, loginMysql } from '../actions/auth';
 import { Header } from './Header';
 
 export class LoginMysqlPage extends React.Component {
@@ -10,8 +10,7 @@ export class LoginMysqlPage extends React.Component {
     const isAuthenticated = await this.props.startLoginMysql(props)
     console.log('in LoginMysqlPage isAuthenticated:', isAuthenticated)
     this.props.loginMysql(isAuthenticated)
-    // this.props.history.push('/dashboard'); 
-  };
+  }
   render() {
     return (
       <div>
@@ -33,7 +32,8 @@ export class LoginMysqlPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     email: state.email,
-    password: state.password
+    password: state.password,
+    error: state.error
   }
 }
 

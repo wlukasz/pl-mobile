@@ -15,13 +15,13 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-      <PublicRoute path="/" component={LoginPage} exact={true} />
-      <PrivateRoute path="/dashboard" component={DashboardPage} />
-      <Route path="/login" component={LoginMysqlPage} />
-      <Route component={NotFoundPage} />
+        <PublicRoute path="/" component={LoginPage} exact={true} />
+        <PublicRoute path="/login" component={LoginMysqlPage} />
+        <PrivateRoute path="/dashboard" component={DashboardPage} />
+        <Route component={NotFoundPage} />
       </Switch>
-      </div>
-      </Router>
+     </div>
+  </Router>
 )
 
 export default AppRouter
