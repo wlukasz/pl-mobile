@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { startLogoutMysql, logoutMysql } from '../actions/auth'
+import { startLogout, logout } from '../actions/auth'
 
-export const Header = ({ startLogoutMysql, logoutMysql }) => {
-  const logout = () => {
-    startLogoutMysql()
-    logoutMysql()
+export const Header = ({ startLogout, logout }) => {
+  const signOut = () => {
+    startLogout()
+    logout()
   }
   return (
   <header className="header">
@@ -17,7 +17,7 @@ export const Header = ({ startLogoutMysql, logoutMysql }) => {
       </Link>
       <button 
         className="button-style button-style--link" 
-        onClick={logout}
+        onClick={signOut}
       >
         Logout
       </button>
@@ -27,8 +27,8 @@ export const Header = ({ startLogoutMysql, logoutMysql }) => {
 )}
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogoutMysql: () => dispatch(startLogoutMysql()),
-  logoutMysql: () => dispatch(logoutMysql())
+  startLogout: () => dispatch(startLogout()),
+  logout: () => dispatch(logout())
 })
 
 export default connect(undefined, mapDispatchToProps)(Header)

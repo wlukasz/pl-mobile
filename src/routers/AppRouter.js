@@ -4,8 +4,8 @@ import { Router, Route, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import DashboardPage from '../components/DashboardPage'
 import NotFoundPage from '../components/NotFoundPage'
+import SplashPage from '../components/SplashPage'
 import LoginPage from '../components/LoginPage'
-import LoginMysqlPage from '../components/LoginMysqlPage'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 
@@ -15,8 +15,8 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-        <PublicRoute path="/" component={LoginPage} exact={true} />
-        <PublicRoute path="/login" component={LoginMysqlPage} />
+        <PublicRoute path="/" component={SplashPage} exact={true} />
+        <PublicRoute path="/login" component={LoginPage} />
         <PrivateRoute path="/dashboard" component={DashboardPage} />
         <Route component={NotFoundPage} />
       </Switch>

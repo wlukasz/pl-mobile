@@ -1,13 +1,13 @@
 import Cookies from 'js-cookie'
 import serverRequest from '../utils/serverRequest'
 
-export const loginMysql = ({ isAuthenticated } = {}) => ({
-  type: 'LOGIN_MYSQL',
+export const login = ({ isAuthenticated } = {}) => ({
+  type: 'LOGIN',
   isAuthenticated
 })
 
-export const startLoginMysql = ({ email, password }) => {
-  console.log('startLoginMysql:', email, password)
+export const startLogin = ({ email, password }) => {
+  console.log('startLogin:', email, password)
   return async () => {
     //  verify user's email & password
     const body = {
@@ -25,13 +25,13 @@ export const startLoginMysql = ({ email, password }) => {
   }
 }
 
-export const logoutMysql = () => ({ 
-  type: 'LOGOUT_MYSQL',
+export const logout = () => ({ 
+  type: 'LOGOUT',
   isAuthenticated: false
 })
 
-export const startLogoutMysql = () => {
-  console.log('startLogoutMysql')
+export const startLogout = () => {
+  console.log('startLogout')
   Cookies.remove('isAuthenticated')
   return () => {
     return {}
