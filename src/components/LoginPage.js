@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import { startLogin, login } from '../actions/auth';
-import { Header } from './Header';
 
 export class LoginPage extends React.Component {
   onSubmit = async (props) => {

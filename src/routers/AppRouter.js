@@ -1,6 +1,5 @@
 import React from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
-// import createHistory from 'history/createBrowserHistory'
 import { createBrowserHistory } from 'history'
 import DashboardPage from '../components/DashboardPage'
 import NotFoundPage from '../components/NotFoundPage'

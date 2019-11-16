@@ -42,8 +42,18 @@ module.exports = (env) => {
 						options: {
 							sourceMap: true
 						}
-					}
+          },
 				]
+      }, {
+        test: /\.(png|svg|jpe?g|gif)$/,
+        use: [
+          { 
+            loader: 'file-loader', 
+            options: {
+              name: '/public/images/[name].[ext]'
+            }
+          }
+        ]
       }]
     },
     plugins: [
