@@ -1,6 +1,6 @@
 node_modules/
 .history
-public/dist/
+dist/
 .env.development
 .env.test
 .vscode/

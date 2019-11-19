@@ -24,3 +24,14 @@ button:disabled {
 .is-active {
   font-weight: bold;
 }
+
+.loading {
+  background-color: red; 
+  height: 3px; 
+  position: absolute;
+}
+
+.error-msg {
+  color: red;
+  padding: 0 $l-size;
+}

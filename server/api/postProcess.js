@@ -1,4 +1,7 @@
 // operations requested after db ops
+
+const jwt = require('jsonwebtoken')
+
 const Password = require('node-php-password')
 
 const postProcess = (body, dbResult) => {
@@ -7,9 +10,16 @@ const postProcess = (body, dbResult) => {
     case 'authUser':
       if (dbResult.length > 0) {
         const isAuthenticated = Password.verify(body.plainPassword, dbResult[0].password)
-        return { isAuthenticated }
+        if (isAuthenticated) {
+          const { password, ...rest } = dbResult[0]
+          const token = jwt.sign({ ...rest }, 'secretphrase')
+          console.log('postProcess, authUser, token:', token)
+          return { isAuthenticated, token, ...rest }
+        } else {
+          return { isAuthenticated }
+        }
       } else { // couldnt rerieve password - bad email
-        return { isAuthenticated: false }
+          return { isAuthenticated: false }
       }
 
     default:

@@ -1,9 +1,14 @@
-import Cookies from 'js-cookie'
 import serverRequest from '../utils/serverRequest'
 
-export const login = ({ isAuthenticated } = {}) => ({
+export const login = ({ isAuthenticated, id, group_id, email, first_name, last_name, token } = {}) => ({
   type: 'LOGIN',
-  isAuthenticated
+  isAuthenticated,
+  id,
+  groupId: group_id,
+  email,
+  firstName: first_name,
+  lastName: last_name,
+  token
 })
 
 export const startLogin = ({ email, password }) => {
@@ -11,28 +16,26 @@ export const startLogin = ({ email, password }) => {
   return async () => {
     //  verify user's email & password
     const body = {
-      reqName: 'fetchPassword', // returns object { isAuthenticated: true/false }
+      reqName: 'fetchPasswordPlus', // returns object { isAuthenticated: true/false + other user's data if true }
       postProcess: 'authUser',
       email,
       plainPassword: password
     }
     const passwordCheck =  await serverRequest(body)
-    
     console.log('passwordCheck:', passwordCheck)
-    Cookies.set('isAuthenticated', passwordCheck.isAuthenticated)
-    console.log('get cookie:', Cookies.get('isAuthenticated'))
+
     return passwordCheck
   }
 }
 
 export const logout = () => ({ 
   type: 'LOGOUT',
-  isAuthenticated: false
+  isAuthenticated: false,
+  token: ''
 })
 
 export const startLogout = () => {
   console.log('startLogout')
-  Cookies.remove('isAuthenticated')
   return () => {
     return {}
   }

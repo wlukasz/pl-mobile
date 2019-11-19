@@ -1,8 +1,8 @@
 .button-style {
-  background: $blue;
-  border: none;
+  background: $off-white;
+  border: solid 1px $dark-grey;
   border-radius: 3px;
-  color: white;
+  color: $dark-grey;
   display: inline-block;
   font-size: $font-size-large;
   font-weight: 300;

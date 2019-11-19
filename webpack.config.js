@@ -50,7 +50,7 @@ module.exports = (env) => {
           { 
             loader: 'file-loader', 
             options: {
-              name: '/public/images/[name].[ext]'
+              name: '/images/[name].[ext]'
             }
           }
         ]

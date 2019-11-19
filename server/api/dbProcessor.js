@@ -5,9 +5,9 @@ const dbProcessor = async body => {
   let dbParams = null
   switch (body.reqName) {
     
-    case 'fetchPassword':
+    case 'fetchPasswordPlus':
       dbParams = {
-        sql: 'SELECT password FROM ?? WHERE ?? = ?',
+        sql: 'SELECT id, group_id, first_name, last_name, email, password FROM ?? WHERE ?? = ?',
         inserts: ['tbl_member', 'email', body.email]
       }
       break
