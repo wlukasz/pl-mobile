@@ -6,6 +6,7 @@ const dbProcessor = require('./api/dbProcessor')
 const preProcess = require('./api/preProcess')
 const postProcess = require('./api/postProcess')
 const nonDbProcess = require('./api/nonDbProcess')
+const auth = require('./middleware/auth')
 
 const app = express()
 const port = process.env.PORT || 4007
@@ -19,9 +20,11 @@ app.use(bodyParser.json({
   
 // Generic POST request
 app.post('/api', async (req, res) => {
+// app.post('/api', auth, async (req, res) => {
   console.log('req.body in server:', req.body)
   if (req.body.nonDbProcess) {
-    const result = nonDbProcess(req.body)
+    const result = await nonDbProcess(req.body)
+    console.log('nonDbProcess result in server:', result)
     res.send(result)
   } else {
     req.body = preProcess(req.body)

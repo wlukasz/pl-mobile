@@ -1,14 +1,22 @@
 export default async (body) => {
   try {
+    let authorizationToken = ''
+    if (body.token) {
+      authorizationToken = `Bearer ${body.token}`
+      // const {token, ...rest} = body
+      // body = { ...rest }
+    }
+
     const postData = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': authorizationToken
       },
       body: JSON.stringify(body)
     }
-    console.log('postData: ', postData)
+    console.log('serverRequest.js, postData: ', postData)
 
     const res = await fetch('api', postData)
     if (!res.ok) { // usually 504 (Gateway Timeout) - i.e. express server is down

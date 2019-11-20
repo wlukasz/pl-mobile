@@ -60,4 +60,4 @@ const mapDispatchToProps = (dispatch) => ({
   hideLoading: () => dispatch(hideLoading())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

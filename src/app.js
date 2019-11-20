@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { dispatch } from 'redux'
 import AppRouter, { history } from './routers/AppRouter'
 import configureStore from './store/configureStore'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
-// import 'react-dates/lib/css/_datepicker.css'
-import LoadingPage from './components/LoadingPage'
+import { verifyToken, login } from './actions/auth'
 
 console.log('history.location', history.location)
 
@@ -24,7 +24,18 @@ const renderApp = () => {
   }
 }
 
-// ReactDOM.render(<LoadingPage />, document.getElementById('app'))
+// New (to me) syntax for Immediately Invoked Async Arrow Function
+// 1. Checks for JWT token in localStorage and if present verifies its validity
+// 2. If token valid logs the user in and redirects to the DashboardPage
+(async () => {
+  const tokenResponse = await verifyToken()
+  console.log('app.js, tokenResponse:', tokenResponse)
+  if (tokenResponse.isAuthenticated === true) {
+    console.log('app.js, tokenResponse.isAuthenticated:', tokenResponse.isAuthenticated)
+    store.dispatch(login({ ...tokenResponse }))
+  }
+  
+})()
 
 renderApp()
 history.push('/')
