@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { startLogout, logout } from '../actions/auth'
+import { logout } from '../actions/auth'
 
-export const SignOut = ({ startLogout, logout }) => {
+export const SignOut = ({ logout }) => {
   const signOut = () => {
-    startLogout()
     logout()
     localStorage.removeItem('token')
   }
@@ -19,7 +18,6 @@ export const SignOut = ({ startLogout, logout }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogout: () => dispatch(startLogout()),
   logout: () => dispatch(logout())
 })
 

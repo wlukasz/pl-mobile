@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { dispatch } from 'redux'
 import AppRouter, { history } from './routers/AppRouter'
 import configureStore from './store/configureStore'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
-import { verifyToken, login } from './actions/auth'
-
-console.log('history.location', history.location)
+import verifyToken from './utils/auth/verifyToken'
+import { login } from './actions/auth'
 
 const store = configureStore()
 const Jsx = () => (
@@ -34,7 +32,6 @@ const renderApp = () => {
     console.log('app.js, tokenResponse.isAuthenticated:', tokenResponse.isAuthenticated)
     store.dispatch(login({ ...tokenResponse }))
   }
-  
 })()
 
 renderApp()

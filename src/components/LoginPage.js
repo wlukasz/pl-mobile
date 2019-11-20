@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import PageHeader from './PageHeader'
 import LoginForm from './LoginForm'
-import { startLogin, login } from '../actions/auth'
+import startLogin from '../utils/auth/startLogin'
+import { login } from '../actions/auth'
 
 export class LoginPage extends React.Component {
   constructor(props) {
