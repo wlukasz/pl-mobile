@@ -19,11 +19,10 @@ app.use(bodyParser.json({
 }))
   
 // Generic POST request
-app.post('/api', async (req, res) => {
-// app.post('/api', auth, async (req, res) => {
+app.post('/api', auth, async (req, res) => {
   console.log('req.body in server:', req.body)
   if (req.body.nonDbProcess) {
-    const result = await nonDbProcess(req.body)
+    const result = await nonDbProcess(req, req.body)
     console.log('nonDbProcess result in server:', result)
     res.send(result)
   } else {

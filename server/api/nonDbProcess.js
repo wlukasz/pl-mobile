@@ -1,19 +1,23 @@
 const jwt = require('jsonwebtoken')
 
-const nonDbProcess = async (body) => {
+const nonDbProcess = async (req, body) => {
+  console.log('nonDbProcess body:', body)
   switch (body.nonDbProcess) {
     
     case 'authUser':
-      console.log('nonDbProcess body:', body)
-      if (body.token) {
-        return await jwt.verify(body.token, 'secretphrase', (error, decoded) => {
+      const token = await req.get('Authorization').replace('Bearer ', '')
+      console.log('nonDbProcess, authUser token:', token)
+      console.log('nonDbProcess, authUser token.length:', token.length)
+    
+      if (token) {
+        return await jwt.verify(token, 'secretphrase', (error, decoded) => {
           if (error) {
             return {}
           }
           else {
             console.log('nonDbProcess, decoded:', decoded)
             const { iat, ...rest } = decoded
-            return { isAuthenticated: true, token: body.token, ...rest}
+            return { isAuthenticated: true, token: token, ...rest}
           }
         })
       } else {

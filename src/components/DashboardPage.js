@@ -13,16 +13,18 @@ export default class DashboardPage extends React.Component {
     }
   }
   setPageTitle = () => 'User Dashboard'
-  async componentDidMount() {
-    // try {
-    //   let body
-    //   // update user name
-    //   body = {
-    //     reqName: 'updateUser', // returns object
-    //     id: 12,
-    //     first_name: 'Wojciech'
-    //   }
-    //   await serverRequest(body)
+  // async componentDidMount() {
+  updateUser = async () => {
+    try {
+      let body
+      // update user name
+      body = {
+        reqName: 'updateUser', // returns object
+        id: 12,
+        first_name: 'Wojciech',
+        token: localStorage.getItem('token')
+      }
+      await serverRequest(body)
 
       // fetch user 
       // body = {
@@ -40,16 +42,17 @@ export default class DashboardPage extends React.Component {
       //   })      
       // })
 
-      console.log('DashboardPage after fetchUser state:', this.state)
-    // } catch(error) {
-    //   console.log('Error caught in componentDidMount:', error)
-    // }
+      console.log('DashboardPage after fetchUser this.state:', this.state)
+    } catch(error) {
+      console.log('Error caught in componentDidMount:', error)
+    }
   }
 
   render() {
     return (
       <div className="Users">
         <PageHeader title={this.setPageTitle()} />
+        <button className="button-style" onClick={this.updateUser}>Update user</button>
         <p>First Name: {this.state.firstName}</p>
         <p>Last Name: {this.state.lastName}</p>
         <p>Email: {this.state.email}</p>

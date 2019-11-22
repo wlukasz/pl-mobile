@@ -22,10 +22,11 @@ export class LoginPage extends React.Component {
     const passwordCheckResponse = await this.props.startLogin(props)
     this.props.hideLoading()
     console.log('in LoginPage passwordCheckResponse:', passwordCheckResponse)
-    if (passwordCheckResponse.isAuthenticated === false) {
-      this.setState(() => ({ error: 'Login unsuccessful' }))
-    } else if (passwordCheckResponse.error) {
+    
+    if (passwordCheckResponse.error) {
       this.setState(() => ({ error: passwordCheckResponse.error.message }))
+    } else if (passwordCheckResponse.isAuthenticated === false) {
+      this.setState(() => ({ error: 'Login unsuccessful' }))
     } else {
       this.props.login(passwordCheckResponse)
       localStorage.setItem('token', passwordCheckResponse.token)
