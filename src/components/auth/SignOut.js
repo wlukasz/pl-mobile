@@ -1,12 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../actions/auth'
+import { logout } from '../../actions/auth'
+import { signOutUser } from '../../actions/user'
 
-export const SignOut = ({ logout }) => {
+export const SignOut = ({ logout, signOutUser }) => {
   const signOut = () => {
     logout()
+    signOutUser()
     localStorage.removeItem('token')
   }
+
   return (
     <button 
     className="button-style button-style--link" 
@@ -18,7 +21,8 @@ export const SignOut = ({ logout }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
+  signOutUser: () => dispatch(signOutUser())
 })
 
 export default connect(undefined, mapDispatchToProps)(SignOut)

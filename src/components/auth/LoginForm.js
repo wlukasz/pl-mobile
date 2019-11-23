@@ -38,7 +38,7 @@ export default class LoginForm extends React.Component {
         {this.state.error && <p className="form__error">{this.state.error}</p>}
         <div className="group">
           <input
-            type="text"
+            type="email"
             className="text-input"
             placeholder="Email"
             autoFocus

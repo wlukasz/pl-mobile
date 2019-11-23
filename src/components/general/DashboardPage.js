@@ -1,5 +1,5 @@
 import React from 'react'
-import serverRequest from '../utils/serverRequest'
+import serverRequest from '../../utils/serverRequest'
 import PageHeader from './PageHeader'
 
 export default class DashboardPage extends React.Component {
@@ -52,7 +52,6 @@ export default class DashboardPage extends React.Component {
     return (
       <div className="Users">
         <PageHeader title={this.setPageTitle()} />
-        <button className="button-style" onClick={this.updateUser}>Update user</button>
         <p>First Name: {this.state.firstName}</p>
         <p>Last Name: {this.state.lastName}</p>
         <p>Email: {this.state.email}</p>

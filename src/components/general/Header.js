@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import logo from '../../public/images/pl-logo.png'
-import SignOut from './SignOut'
+import logo from '../../../public/images/pl-logo.png'
+import SignOut from '../auth/SignOut'
 
 export const Header = ({ isAuthenticated }) => {
 
@@ -13,6 +13,11 @@ export const Header = ({ isAuthenticated }) => {
       <Link className="header__title" to='/dashboard'>
         <img src={logo} alt="Logo" />
       </Link>
+      {isAuthenticated &&
+        <Link className="button-style button-style--link"  to='/userprofile'>
+          Your Profile
+        </Link>
+      }
       {isAuthenticated && <SignOut />}
     </div>
   </div>

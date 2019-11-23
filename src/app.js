@@ -7,6 +7,7 @@ import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 import verifyToken from './utils/auth/verifyToken'
 import { login } from './actions/auth'
+import { updateUser } from './actions/user'
 
 const store = configureStore()
 const Jsx = () => (
@@ -30,8 +31,10 @@ const renderApp = () => {
   console.log('app.js, tokenResponse:', tokenResponse)
   if (tokenResponse.isAuthenticated === true) {
     console.log('app.js, tokenResponse.isAuthenticated:', tokenResponse.isAuthenticated)
-    store.dispatch(login({ ...tokenResponse }))
-  }
+    const { isAuthenticated, token, ...rest } = tokenResponse
+    store.dispatch(login({ isAuthenticated, token }))
+    store.dispatch(updateUser({ ...rest }))
+}
 })()
 
 renderApp()

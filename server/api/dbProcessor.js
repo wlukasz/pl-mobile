@@ -21,8 +21,8 @@ const dbProcessor = async body => {
 
     case 'updateUser':
       dbParams = {
-        sql: 'UPDATE ?? SET ?? = ? WHERE ?? = ?',
-        inserts: ['tbl_member', 'first_name', body.first_name,  'id', body.id]
+        sql: 'UPDATE ?? SET ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?',
+        inserts: ['tbl_member', 'first_name', body.first_name, 'last_name', body.last_name, 'email', body.email, 'id', body.id]
       }
       break
 

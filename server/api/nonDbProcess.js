@@ -24,6 +24,11 @@ const nonDbProcess = async (req, body) => {
         return {}
       }
 
+    case 'renewToken':
+      const { reqName, nonDbProcess, ...rest } = body
+      const renewedToken = jwt.sign({ ...rest }, 'secretphrase')
+      return { token: renewedToken }
+
     default:
       return {}
   }

@@ -1,13 +1,17 @@
-export const login = ({ isAuthenticated, id, group_id, email, first_name, last_name, token } = {}) => ({
+export const login = ({ isAuthenticated, token } = {}) => ({
   type: 'LOGIN',
   isAuthenticated,
-  id,
-  groupId: group_id,
-  email,
-  firstName: first_name,
-  lastName: last_name,
   token
 })
+
+export const renewToken = (token = {}) => {
+  console.log('Action RENEW_TOKEN, token:', token)
+  return {
+  type: 'RENEW_TOKEN',
+  isAuthenticated: true,
+  token
+  }  
+} 
 
 export const logout = () => ({ 
   type: 'LOGOUT'

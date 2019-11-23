@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import PageHeader from './PageHeader'
+import PageHeader from '../general/PageHeader'
 import LoginForm from './LoginForm'
-import startLogin from '../utils/auth/startLogin'
-import { login } from '../actions/auth'
+import startLogin from '../../utils/auth/startLogin'
+import { login } from '../../actions/auth'
+import { updateUser } from '../../actions/user'
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ export class LoginPage extends React.Component {
     } else if (passwordCheckResponse.isAuthenticated === false) {
       this.setState(() => ({ error: 'Login unsuccessful' }))
     } else {
-      this.props.login(passwordCheckResponse)
+      const { isAuthenticated, token, ...rest } = passwordCheckResponse
+      this.props.login( { isAuthenticated, token })
+      this.props.updateUser({ ...rest })
       localStorage.setItem('token', passwordCheckResponse.token)
     }
   }
@@ -58,6 +61,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   startLogin: (props) => dispatch(startLogin(props)),
   login: (props) => dispatch(login(props)),
+  updateUser: (props) => dispatch(updateUser(props)),
   showLoading: () => dispatch(showLoading()),
   hideLoading: () => dispatch(hideLoading())
 });
