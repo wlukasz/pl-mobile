@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import AppRouter, { history } from './routers/AppRouter'
 import configureStore from './store/configureStore'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 import verifyToken from './utils/auth/verifyToken'
@@ -34,8 +35,8 @@ const renderApp = () => {
     const { isAuthenticated, token, ...rest } = tokenResponse
     store.dispatch(login({ isAuthenticated, token }))
     store.dispatch(updateUser({ ...rest }))
-}
+  }
+  renderApp()
+  history.push('/')
 })()
 
-renderApp()
-history.push('/')

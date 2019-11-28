@@ -4,14 +4,11 @@ export const login = ({ isAuthenticated, token } = {}) => ({
   token
 })
 
-export const renewToken = (token = {}) => {
-  console.log('Action RENEW_TOKEN, token:', token)
-  return {
+export const renewToken = (token = {}) => ({
   type: 'RENEW_TOKEN',
   isAuthenticated: true,
   token
-  }  
-} 
+})  
 
 export const logout = () => ({ 
   type: 'LOGOUT'

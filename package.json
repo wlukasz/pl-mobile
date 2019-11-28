@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build:dev": "webpack --mode=development --watch",
-    "build:prod": "webpack --env production",
+    "build:prod": "webpack -p --env production",
     "dev-frontend": "webpack-dev-server",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.json --watch",
     "dev-express": "nodemon server/server.js",
@@ -22,6 +22,7 @@
     "babel-preset-env": "1.5.2",
     "babel-preset-react": "6.24.1",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.0",
     "css-loader": "^3.2.0",
     "express": "^4.17.1",
     "firebase": "^7.1.0",
@@ -38,6 +39,7 @@
     "raf": "^3.3.2",
     "react": "^16.10.1",
     "react-addons-shallow-compare": "^15.6.2",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dates": "^21.2.0",
     "react-dom": "^16.10.1",
     "react-modal": "^3.10.1",
@@ -65,6 +67,5 @@
     "redux-logger": "^3.0.6",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
-  },
-  "proxy": "http://localhost:4007"
+  }
 }
