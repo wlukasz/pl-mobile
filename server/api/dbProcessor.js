@@ -26,6 +26,13 @@ const dbProcessor = async body => {
       }
       break
 
+      case 'getTagData':
+        dbParams = {
+          sql: 'SELECT ?? FROM ?? WHERE ?? = ? AND ?? IS NULL',
+          inserts: ['mobile_data', 'tbl_tenancy_agreement', 'tenant_id', body.id, 'date_closed']
+        }
+        break
+  
     default:
       return false
   }

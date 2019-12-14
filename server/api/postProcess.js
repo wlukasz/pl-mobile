@@ -1,12 +1,14 @@
 // operations requested after db ops
 
 const jwt = require('jsonwebtoken')
-
 const Password = require('node-php-password')
 
 const postProcess = (body, dbResult) => {
+  console.log('postProcess, body:', body)
+  console.log('postProcess, dbResult:', dbResult)
+
   switch (body.postProcess) {
-   
+    
     case 'authUser':
       try {
         if (dbResult.length > 0) {
@@ -32,6 +34,22 @@ const postProcess = (body, dbResult) => {
         } else { // couldnt rerieve password - bad email
             return { isAuthenticated: false }
         }
+      } catch (error) { 
+        return { error }
+      }
+
+    case 'parseTagData':
+      try {
+        if (dbResult.length > 0) {
+          const parsedResult = dbResult.map((textRow) => {
+            console.log('postProcess, textRow:', textRow)
+            return JSON.parse(textRow.mobile_data)
+          })
+          console.log('postProcess, parsed dbResult', parsedResult)
+          return parsedResult
+        } else {
+          return {}
+        }  
       } catch (error) {
         return { error }
       }

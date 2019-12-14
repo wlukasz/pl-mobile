@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import AppRouter, { history } from './routers/AppRouter'
-import configureStore from './store/configureStore'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
+import AppRouter, { history } from './routers/AppRouter'
+import configureStore from './store/configureStore'
 import verifyToken from './utils/auth/verifyToken'
 import { login } from './actions/auth'
 import { updateUser } from './actions/user'
+import { updateTags } from './actions/tags'
+import getTagData from './utils/user/getTagData'
 
 const store = configureStore()
 const Jsx = () => (
@@ -32,9 +34,12 @@ const renderApp = () => {
   console.log('app.js, tokenResponse:', tokenResponse)
   if (tokenResponse.isAuthenticated === true) {
     console.log('app.js, tokenResponse.isAuthenticated:', tokenResponse.isAuthenticated)
-    const { isAuthenticated, token, ...rest } = tokenResponse
+    const { isAuthenticated, token, id, ...rest } = tokenResponse
     store.dispatch(login({ isAuthenticated, token }))
-    store.dispatch(updateUser({ ...rest }))
+    store.dispatch(updateUser({ id, ...rest }))
+    const tagData = await getTagData(id, token)
+    console.log('app.js, tagData', tagData)
+    store.dispatch(updateTags(tagData))  
   }
   renderApp()
   history.push('/')

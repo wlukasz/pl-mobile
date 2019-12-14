@@ -4,7 +4,6 @@ export default async (body) => {
     // const token = await localStorage.getItem('token')
 
     const { token, ...rest } = body
-    console.log('serverRequest.js, token:', token)
     body = { ...rest }
 
     const postData = {

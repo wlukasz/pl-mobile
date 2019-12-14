@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PageHeader from '../general/PageHeader'
+import AllUserTags from './AllUserTags'
 
 export class DashboardPage extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export class DashboardPage extends React.Component {
     return (
       <div className="Users">
         <PageHeader title={this.setPageTitle()} />
-        <p>Current email: {this.props.email}</p>
+        <AllUserTags />
       </div>
     )
   }
@@ -22,7 +23,7 @@ export class DashboardPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     firstName: state.user.firstName,
-    email: state.user.email
+    id: state.user.id
   }
 }
 
