@@ -1,7 +1,6 @@
 import serverRequest from '../serverRequest'
 
 export default (id, token) => {
-  console.log('getTagData:', id, token)
   return (async () => {
     try {
       const body = {
@@ -10,12 +9,8 @@ export default (id, token) => {
         id,
         token
       }
-      console.log('getTagData, body:', body)
-      const tagDataDb = await serverRequest(body)
-      console.log('getTagData, tagDataDb-result:', tagDataDb)
-      return tagDataDb
+      return await serverRequest(body)
     } catch(error) {
-      console.log('Error getting Tag Data:', error)
       return { error }
     }
   })()

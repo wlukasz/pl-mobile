@@ -31,14 +31,11 @@ const renderApp = () => {
 // 2. If token valid logs the user in and redirects to the DashboardPage
 (async () => {
   const tokenResponse = await verifyToken()
-  console.log('app.js, tokenResponse:', tokenResponse)
   if (tokenResponse.isAuthenticated === true) {
-    console.log('app.js, tokenResponse.isAuthenticated:', tokenResponse.isAuthenticated)
     const { isAuthenticated, token, id, ...rest } = tokenResponse
     store.dispatch(login({ isAuthenticated, token }))
     store.dispatch(updateUser({ id, ...rest }))
     const tagData = await getTagData(id, token)
-    console.log('app.js, tagData', tagData)
     store.dispatch(updateTags(tagData))  
   }
   renderApp()

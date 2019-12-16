@@ -1,11 +1,11 @@
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case 'UPDATE_TAGS':
+    case 'UPDATE_TAG_TO_PAY':
       return {
-        tags: action.tags
+        poli: action.poli
       }
-
+  
     default:
       return state
   }
