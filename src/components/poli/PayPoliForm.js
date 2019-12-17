@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Form } from 'react-bootstrap'
+import moment from 'moment'
 import UserTagInForm from './UserTagInForm'
 
 export class PayPoliForm extends React.Component {
@@ -8,36 +9,46 @@ export class PayPoliForm extends React.Component {
     super(props)
 
     this.state = {
-      weekly: null,
+      dailyArray: null,
+      weeklyArray: null,
       amountToPay: 0,
       error: ''
     }
   }
 
   componentDidMount() {
-    this.setUpWeekly()
+    if (this.props.poli) {
+      if (this.props.poli.daily_rates_array) {
+        this.setUpPayAmountsOptionsArray(this.props.poli.daily_rates_array, 'day')
+      }
+      this.setUpPayAmountsOptionsArray(this.props.poli.weekly_rates_array, 'week')
+    }
   }    
 
-  setUpWeekly() {
-    if (this.props.poli) {
-      const amountsKeys = Object.keys(this.props.poli.weekly_rates_array)
-      const weekly = amountsKeys.map( (weeks, index) => {
-        let weekOrWeeks
-        if (weeks == 1) {
-          weekOrWeeks = 'week'
-        } else {
-          weekOrWeeks = 'weeks'
-        }
-        return (
-          <option
-            key={index}
-            value={this.props.poli.weekly_rates_array[weeks].amount_to_pay}
-          >
-          {weeks} {weekOrWeeks} = ${this.props.poli.weekly_rates_array[weeks].amount_to_pay}</option>
+  async setUpPayAmountsOptionsArray(ratesObject, periodName) {
+    const amountsKeys = Object.keys(ratesObject)
+    let optionsArray = amountsKeys.map( (numberOfPeriods, index) => {
+      let period
+      if (numberOfPeriods == 1) {
+        period = periodName 
+      } else {
+        period = periodName + 's'
+      }
+      
+      return (
+        <option
+        key={index + periodName}
+        value={ratesObject[numberOfPeriods].amount_to_pay}
+        >
+        {numberOfPeriods} {period} = ${ratesObject[numberOfPeriods].amount_to_pay}</option>
         )
       })
-      this.setState(() => ({ weekly }))
-    } 
+
+      if (periodName !== 'day') {
+        await this.setState(() => ({ dailyArray: optionsArray }))
+      } else {
+        await this.setState(() => ({ weeklyArray: optionsArray }))
+      }
   }
 
   onAmountToPayChange = (e) => {
@@ -70,7 +81,13 @@ export class PayPoliForm extends React.Component {
             <Form.Label>Select payment amount</Form.Label>
             <Form.Control as="select" size="lg" onChange={this.onAmountToPayChange}>
               <option value="0">Please select...</option>
-              {this.state.weekly !== null && [ ...this.state.weekly ]}
+              {this.props.poli && this.props.poli.future_weekly_rent.rate &&
+              <option value="0">
+                *** Weekly Rent changes to ${Math.round(this.props.poli.future_weekly_rent.rate)} on {moment(this.props.poli.future_weekly_rent.effective_date).format("D MMM YYYY")}
+              </option>
+              }
+              {this.state.weeklyArray && [ ...this.state.weeklyArray ]}
+              {this.state.dailyArray && [ ...this.state.dailyArray ]}
             </Form.Control>
           </Form.Group>
           <div>

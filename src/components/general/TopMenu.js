@@ -3,12 +3,10 @@ import { connect } from 'react-redux'
 import { DropdownButton, DropdownItem, Dropdown } from 'react-bootstrap'
 import { history } from '../../routers/AppRouter'
 import { logout } from '../../actions/auth'
-import { signOutUser } from '../../actions/user'
 
-export const TopMenu = ({ logout, signOutUser }) => {
+export const TopMenu = ({ logout }) => {
   const signOut = () => {
     logout()
-    signOutUser()
     localStorage.removeItem('token')
   }
 
@@ -23,8 +21,7 @@ export const TopMenu = ({ logout, signOutUser }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-  signOutUser: () => dispatch(signOutUser())
+  logout: () => dispatch(logout())
 })
 
 export default connect(undefined, mapDispatchToProps)(TopMenu)

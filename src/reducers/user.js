@@ -9,9 +9,6 @@ export default (state = {}, action) => {
         lastName: action.lastName
       }
 
-    case 'SIGNOUT_USER':
-      return {}
-
     default:
       return state
   }

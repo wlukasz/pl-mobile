@@ -6,6 +6,8 @@ import LoginForm from './LoginForm'
 import startLogin from '../../utils/auth/startLogin'
 import { login } from '../../actions/auth'
 import { updateUser } from '../../actions/user'
+import getTagData from '../../utils/user/getTagData'
+import { updateTags } from '../../actions/tags'
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -18,21 +20,21 @@ export class LoginPage extends React.Component {
 
   setPageTitle = () => 'Login'
   onSubmit = async (props) => {
-    console.log('In LoginPage props:', props)
     this.props.showLoading()
     const passwordCheckResponse = await this.props.startLogin(props)
     this.props.hideLoading()
-    console.log('in LoginPage passwordCheckResponse:', passwordCheckResponse)
     
     if (passwordCheckResponse.error) {
       this.setState(() => ({ error: passwordCheckResponse.error.message }))
     } else if (passwordCheckResponse.isAuthenticated === false) {
       this.setState(() => ({ error: 'Login unsuccessful' }))
     } else {
-      const { isAuthenticated, token, ...rest } = passwordCheckResponse
+      const { isAuthenticated, token, id, ...rest } = passwordCheckResponse
       this.props.login( { isAuthenticated, token })
-      this.props.updateUser({ ...rest })
-      localStorage.setItem('token', passwordCheckResponse.token)
+      this.props.updateUser({ id, ...rest })
+      const tagData = await getTagData(id, token)
+      this.props.updateTags(tagData)      
+      localStorage.setItem('token', token)
     }
   }
   render() {  
@@ -62,6 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
   startLogin: (props) => dispatch(startLogin(props)),
   login: (props) => dispatch(login(props)),
   updateUser: (props) => dispatch(updateUser(props)),
+  getTagData: (props) => dispatch(getTagData(props)),
+  updateTags: (props) => dispatch(updateTags(props)),
   showLoading: () => dispatch(showLoading()),
   hideLoading: () => dispatch(hideLoading())
 });

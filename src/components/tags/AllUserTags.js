@@ -4,16 +4,18 @@ import UserTag from './UserTag'
 
 export const AllUserTags = ({ tags }) => (
   <div>
-    {tags.map(tag => {
-      return <UserTag 
-        key={tag.tagid} 
-        tagid={tag.tagid} 
-        property={tag.property} 
-        dashTagBarMsg={tag.dash_tag_bar_msg} 
-        dashTagBarColor={tag.dash_tag_bar_color}
-        allProps={tag}
-      />
-  })}
+    {tags ? 
+      tags.map(tag => {
+        return <UserTag 
+          key={tag.tagid} 
+          tagid={tag.tagid} 
+          property={tag.property} 
+          dashTagBarMsg={tag.dash_tag_bar_msg} 
+          dashTagBarColor={tag.dash_tag_bar_color}
+          allProps={tag}
+        />
+      })
+    : null}
   </div>
 )
 
