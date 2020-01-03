@@ -1,7 +1,6 @@
 import serverRequest from '../serverRequest'
 
 export default ({ id, firstName, lastName, email, token }) => {
-  console.log('startUserUpdate:', id, firstName, lastName, email, token)
   return async () => {
     try {
       const body = {
@@ -12,9 +11,7 @@ export default ({ id, firstName, lastName, email, token }) => {
         email,
         token
       }
-      console.log('startUserUpdate, body:', body)
-      const userUpdateDb = await serverRequest(body)
-      console.log('startUserUpdate, userUpdateDb-result:', userUpdateDb)
+      await serverRequest(body)
       return { ...body }
     } catch(error) {
       console.log('Error updating User:', error)

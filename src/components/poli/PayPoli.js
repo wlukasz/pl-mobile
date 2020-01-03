@@ -8,11 +8,13 @@ export class PayPoli extends React.Component {
     super(props)
     
     this.state = {
+      formSubmitted: false,
       error: false
     }
   }
 
   onSubmit = async (props) => {
+    this.setState(() => ({ formSubmitted: true }))
     console.log('PayPoli, onSubmit, props:', props)
   }  
 
@@ -20,12 +22,17 @@ export class PayPoli extends React.Component {
     return (
       <div>
         <PageHeader title={`Pay with POLi, ${this.props.firstName}`} />
-        <div className="content-container">
-          {this.state.error !== false && <p className="error-msg">{this.state.error}</p>}
-          <PayPoliForm
-            onSubmit={this.onSubmit}
-          />
+        {!this.state.formSubmitted ? 
+        <div>
+          <div className="content-container">
+            {this.state.error !== false && <p className="error-msg">{this.state.error}</p>}
+            <PayPoliForm
+              onSubmit={this.onSubmit}
+            />
+          </div>
         </div>
+        :
+        <p>Form has been submitted</p>}
       </div>
     )
   }

@@ -23,13 +23,20 @@ export class UserTag extends React.Component {
         <Card border={this.props.dashTagBarColor} style={{ width: '100%', marginBottom: '1.5rem' }}>
           <Card.Body>
             <Card.Title>{this.props.property}</Card.Title>
-            <Button 
-              variant={this.props.dashTagBarColor} 
-              style={{ width: '100%' }} size="lg"
-              onClick={this.onButtonClick}
-            > 
-              {this.props.dashTagBarMsg}
-            </Button>
+            {this.props.allProps.paytype === 'rent' ? (
+              <Button 
+                variant={this.props.dashTagBarColor} 
+                style={{ width: '100%' }} size="lg"
+                onClick={this.onButtonClick}
+              > 
+                {this.props.dashTagBarMsg}
+              </Button>
+            ) : (
+              <Card.Text>
+                Payment type "{this.props.allProps.paytype}" must be made on PeterLandlord website.
+                Once initial payment has been made you can continue your rent payments here.
+              </Card.Text>
+            )}
           </Card.Body>
         </Card>
       </div>

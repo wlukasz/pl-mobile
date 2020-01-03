@@ -8,8 +8,12 @@ const postProcess = require('./api/postProcess')
 const nonDbProcess = require('./api/nonDbProcess')
 const auth = require('./middleware/auth')
 
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+} 
+
 const app = express()
-const port = process.env.PORT || 4007
+const port = process.env.PORT
 
 // Required for POST request
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -44,5 +48,6 @@ app.get('*', (req, res) => {
 
 app.listen(port, () => {
   console.log('****************************************************************************')
+  console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
   console.log(`Express Server is up on port ${port}`)
 })

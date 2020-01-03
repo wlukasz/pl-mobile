@@ -22,7 +22,6 @@ export class LoginPage extends React.Component {
   onSubmit = async (props) => {
     this.props.showLoading()
     const passwordCheckResponse = await this.props.startLogin(props)
-    this.props.hideLoading()
     
     if (passwordCheckResponse.error) {
       this.setState(() => ({ error: passwordCheckResponse.error.message }))
@@ -36,6 +35,7 @@ export class LoginPage extends React.Component {
       this.props.updateTags(tagData)      
       localStorage.setItem('token', token)
     }
+    this.props.hideLoading()
   }
   render() {  
     return (

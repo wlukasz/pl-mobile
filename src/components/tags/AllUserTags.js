@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Card } from 'react-bootstrap'
 import UserTag from './UserTag'
 
 export const AllUserTags = ({ tags }) => (
   <div>
-    {tags ? 
+    {tags && Object.keys(tags).length > 0 ? 
       tags.map(tag => {
         return <UserTag 
           key={tag.tagid} 
@@ -15,7 +16,11 @@ export const AllUserTags = ({ tags }) => (
           allProps={tag}
         />
       })
-    : null}
+    :  
+      <div className="content-container">
+        <h2>We cannot find any active tenancies for you.</h2>
+      </div>
+    }
   </div>
 )
 

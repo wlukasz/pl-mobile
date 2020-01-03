@@ -1,5 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
@@ -7,7 +7,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 if (process.env.NODE_ENV === 'test') {
   require('dotenv').config({ path: '.env.test' })
 } else if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config({ path: '.env.development' })
+  require('dotenv').config()
 }
 
 module.exports = (env) => {
@@ -57,7 +57,7 @@ module.exports = (env) => {
       }]
     },
     plugins: [
-      CSSExtract
+      CSSExtract,
     ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
@@ -65,7 +65,7 @@ module.exports = (env) => {
       historyApiFallback: true,
       publicPath: '/dist/',
       proxy: {
-        '/api/*': 'http://localhost:4007'
+        '/api/*': `http://localhost:${process.env.PORT}`
       }
     }
   }

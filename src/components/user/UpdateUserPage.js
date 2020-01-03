@@ -17,13 +17,13 @@ export class UpdateUserPage extends React.Component {
     }
   }
 
-  setPageTitle = () => 'User Profile'
+  setPageTitle = (props) => {
+    return `Your Profile, ${props.firstName}`
+  }
   onSubmit = async (props) => {
-    console.log('In UpdateUserPage props:', props)
     this.props.showLoading()
     const userUpdateResult = await this.props.startUserUpdate(props)
     this.props.hideLoading()
-    console.log('in UpdateUserPage userUpdateResult:', userUpdateResult)
     
     if (userUpdateResult.error) {
       this.setState(() => ({ error: userUpdateResult.error }))
@@ -31,14 +31,13 @@ export class UpdateUserPage extends React.Component {
       const { reqName, token, ...rest } = userUpdateResult
       this.props.updateUser({ ...rest })
       const renewedToken = await this.props.startRenewToken({ token, ...rest })
-      console.log('updateUserPage, renewedToken:', renewedToken)
       this.props.renewToken( renewedToken )
     }
   }
   render() {  
     return (
       <div>
-      <PageHeader title={this.setPageTitle()} />
+      <PageHeader title={this.setPageTitle(this.props)} />
       <div className="content-container">
           {this.state.error !== false && <p className="error-msg">{this.state.error}</p>}
           <UserForm
@@ -52,11 +51,7 @@ export class UpdateUserPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.token,
-    id: state.id,
-    firstName: state.FirstName,
-    lastName: state.LastName,
-    email: state.email
+    firstName: state.user.firstName
   }
 }
 
