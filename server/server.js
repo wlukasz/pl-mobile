@@ -6,6 +6,8 @@ const dbProcessor = require('./api/dbProcessor')
 const preProcess = require('./api/preProcess')
 const postProcess = require('./api/postProcess')
 const nonDbProcess = require('./api/nonDbProcess')
+const initiatePoliTransaction = require('./api/initiatePoliTransaction')
+const getPoliTransaction = require('./api/getPoliTransaction')
 const auth = require('./middleware/auth')
 
 if (process.env.NODE_ENV === 'development') {
@@ -28,6 +30,14 @@ app.post('/api', auth, async (req, res) => {
   if (req.body.nonDbProcess) {
     const result = await nonDbProcess(req, req.body)
     console.log('nonDbProcess result in server:', result)
+    res.send(result)
+  } else if (req.body.poliRequest === 'initiatePoliTransaction') {
+    const result = await initiatePoliTransaction(req, req.body)
+    console.log('initiatePoliTransaction result in server:', result)
+    res.send(result)
+  } else if (req.body.poliRequest === 'getPoliTransaction') {
+    const result = await getPoliTransaction(req, req.body)
+    console.log('getPoliTransaction result in server:', result)
     res.send(result)
   } else {
     req.body = preProcess(req.body)

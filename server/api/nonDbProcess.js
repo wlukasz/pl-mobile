@@ -28,9 +28,9 @@ const nonDbProcess = async (req, body) => {
       const { reqName, nonDbProcess, ...rest } = body
       const renewedToken = jwt.sign({ ...rest }, 'secretphrase')
       return { token: renewedToken }
-
-    default:
-      return {}
+  
+  default:
+      return {error: 'Error! Undefined "body.nonDbProcess"'}
   }
 }
 

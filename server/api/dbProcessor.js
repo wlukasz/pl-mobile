@@ -26,13 +26,21 @@ const dbProcessor = async body => {
       }
       break
 
-      case 'getTagData':
-        dbParams = {
-          sql: 'SELECT ?? FROM ?? WHERE ?? = ? AND ?? IS NULL',
-          inserts: ['mobile_data', 'tbl_tenancy_agreement', 'tenant_id', body.id, 'date_closed']
-        }
-        break
-  
+    case 'getTagData':
+      dbParams = {
+        sql: 'SELECT ?? FROM ?? WHERE ?? = ? AND ?? IS NULL',
+        inserts: ['mobile_data', 'tbl_tenancy_agreement', 'tenant_id', body.id, 'date_closed']
+      }
+      break
+
+    case 'insertPoliToken':
+      dbParams = {
+        sql: 'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES(?, ?, ?, ?, ?)',
+        inserts: ['tbl_poli_initiated_txn', 'token', 'paytyp', 'member_id', 'tag_id', 'property_id',
+        body.poliToken, body.poli.paytype, body.memid, body.poli.tagid, body.poli.propid]
+      }
+      break
+      
     default:
       return false
   }

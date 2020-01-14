@@ -5,6 +5,11 @@ export default (state = {}, action) => {
       return {
         poli: action.poli
       }
+
+    case 'STORE_POLI_TOKEN':
+      return {
+        poli: action.allPropsAndPoliToken
+      }
   
     default:
       return state

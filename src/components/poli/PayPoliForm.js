@@ -63,7 +63,9 @@ export class PayPoliForm extends React.Component {
     } else {
       this.setState(() => ({ error: '' })) 
       this.props.onSubmit({
-        tagId: this.props.poli.tagid,
+        memid: this.props.id,
+        token: this.props.token,
+        poli: this.props.poli,
         amountToPay: this.state.amountToPay
       })
     }
@@ -101,6 +103,8 @@ export class PayPoliForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    id: state.user.id,
+    token: state.auth.token,
     poli: state.poli.poli ? state.poli.poli.allProps : null
   }
 }
