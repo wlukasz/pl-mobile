@@ -41,6 +41,100 @@ const dbProcessor = async body => {
       }
       break
       
+    case 'insertPoliRentRecord':
+      dbParams = {
+        sql: `INSERT INTO ?? 
+        (??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??,??) 
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+        inserts: [
+          'tbl_poli_rent_record',
+          'token', 
+          'CountryName', 
+          'FinancialInstitutionCountryCode', 
+          'TransactionID', 
+          'MerchantEstablishedDateTime', 
+          'PayerAccountNumber', 
+          'PayerAccountSortCode', 
+          'MerchantAccountSortCode', 
+          'MerchantAccountName', 
+          'MerchantData', 
+          'CurrencyName', 
+          'TransactionStatus', 
+          'IsExpired', 
+          'MerchantEntityID', 
+          'UserIPAddress', 
+          'POLiVersionCode', 
+          'MerchantName', 
+          'TransactionRefNo', 
+          'CurrencyCode', 
+          'CountryCode', 
+          'PaymentAmount', 
+          'AmountPaid', 
+          'EstablishedDateTime', 
+          'StartDateTime', 
+          'EndDateTime', 
+          'BankReceipt', 
+          'BankReceiptDateTime', 
+          'TransactionStatusCode', 
+          'ErrorCode', 
+          'ErrorMessage', 
+          'FinancialInstitutionCode', 
+          'FinancialInstitutionName', 
+          'MerchantReference', 
+          'MerchantAccountNumber', 
+          'PayerFirstName', 
+          'PayerFamilyName', 
+          'PayerAccountSuffix',
+
+          body.poliToken,
+          body.CountryName, 
+          body.FinancialInstitutionCountryCode, 
+          body.TransactionID, 
+          body.MerchantEstablishedDateTime, 
+          body.PayerAccountNumber, 
+          body.PayerAccountSortCode, 
+          body.MerchantAccountSortCode, 
+          body.MerchantAccountName, 
+          body.MerchantData, 
+          body.CurrencyName, 
+          body.TransactionStatus, 
+          body.IsExpired, 
+          body.MerchantEntityID, 
+          body.UserIPAddress, 
+          body.POLiVersionCode, 
+          body.MerchantName, 
+          body.TransactionRefNo, 
+          body.CurrencyCode, 
+          body.CountryCode, 
+          body.PaymentAmount, 
+          body.AmountPaid, 
+          body.EstablishedDateTime, 
+          body.StartDateTime, 
+          body.EndDateTime, 
+          body.BankReceipt, 
+          body.BankReceiptDateTime, 
+          body.TransactionStatusCode, 
+          body.ErrorCode, 
+          body.ErrorMessage, 
+          body.FinancialInstitutionCode, 
+          body.FinancialInstitutionName, 
+          body.MerchantReference, 
+          body.MerchantAccountNumber, 
+          body.PayerFirstName, 
+          body.PayerFamilyName, 
+          body.PayerAccountSuffix
+        ]
+      }
+      break
+
+    case 'insertTenancyRentRecord':
+      dbParams = {
+        sql: 'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES(?, ?, ?, ?, ?)',
+        inserts: ['tbl_tenancy_rent_record', 'tenancy_id', 'amount_paid', 'date_paid', 'financial_year_end', 'method',
+        body.tagid, body.amount_paid, body.date_paid, body.finYear, 'POLi']
+      }
+      break
+        
     default:
       return false
   }

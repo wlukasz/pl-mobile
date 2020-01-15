@@ -53,7 +53,7 @@ export class PayPoli extends React.Component {
           </div>
         </div>
         :
-        <p>Form has been submitted</p>}
+        <p>Please wait for POLi...</p>}
       </div>
     )
   }
