@@ -28,8 +28,10 @@ const dbProcessor = async body => {
 
     case 'getTagData':
       dbParams = {
-        sql: 'SELECT ?? FROM ?? WHERE ?? = ? AND ?? IS NULL',
-        inserts: ['mobile_data', 'tbl_tenancy_agreement', 'tenant_id', body.id, 'date_closed']
+        sql: `SELECT ?? FROM ?? WHERE ?? is NULL AND EXISTS
+        (SELECT 1 FROM ?? WHERE tbl_tenancy_group.tenancy_agreement_id = tbl_tenancy_agreement.id
+        AND tbl_tenancy_group.tenant_id = ?)`,
+        inserts: ['mobile_data', 'tbl_tenancy_agreement', 'date_closed', 'tbl_tenancy_group', body.id]
       }
       break
 

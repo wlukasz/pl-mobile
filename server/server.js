@@ -8,6 +8,7 @@ const postProcess = require('./api/postProcess')
 const nonDbProcess = require('./api/nonDbProcess')
 const initiatePoliTransaction = require('./api/initiatePoliTransaction')
 const getPoliTransaction = require('./api/getPoliTransaction')
+const refreshUserTags = require('./api/refreshUserTags')
 const auth = require('./middleware/auth')
 
 if (process.env.NODE_ENV === 'development') {
@@ -38,6 +39,10 @@ app.post('/api', auth, async (req, res) => {
   } else if (req.body.poliRequest === 'getPoliTransaction') {
     const result = await getPoliTransaction(req, req.body)
     console.log('getPoliTransaction result in server:', result)
+    res.send(result)
+  } else if (req.body.reqName === 'refreshUserTags') {
+    const result = await refreshUserTags(req.body)
+    console.log('refreshUserTags result in server:', result)
     res.send(result)
   } else {
     req.body = preProcess(req.body)

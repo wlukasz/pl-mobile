@@ -6,6 +6,7 @@ import LoginForm from './LoginForm'
 import startLogin from '../../utils/auth/startLogin'
 import { login } from '../../actions/auth'
 import { updateUser } from '../../actions/user'
+import refreshUserTags from '../../utils/user/refreshUserTags'
 import getTagData from '../../utils/user/getTagData'
 import { updateTags } from '../../actions/tags'
 
@@ -31,6 +32,11 @@ export class LoginPage extends React.Component {
       const { isAuthenticated, token, id, ...rest } = passwordCheckResponse
       this.props.login( { isAuthenticated, token })
       this.props.updateUser({ id, ...rest })
+            
+      // refresh mobile_data in db-tenancy agreement table for this memid
+      const tagsRefreshed = await refreshUserTags({ token, memid: id })
+      console.log('app.js, tagsRefreshed:', tagsRefreshed)
+
       const tagData = await getTagData(id, token)
       this.props.updateTags(tagData)      
       localStorage.setItem('token', token)

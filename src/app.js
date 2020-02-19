@@ -10,6 +10,7 @@ import verifyToken from './utils/auth/verifyToken'
 import { login } from './actions/auth'
 import { updateUser } from './actions/user'
 import { updateTags } from './actions/tags'
+import refreshUserTags from './utils/user/refreshUserTags'
 import getTagData from './utils/user/getTagData'
 
 const store = configureStore()
@@ -35,6 +36,11 @@ const renderApp = () => {
     const { isAuthenticated, token, id, ...rest } = tokenResponse
     store.dispatch(login({ isAuthenticated, token }))
     store.dispatch(updateUser({ id, ...rest }))
+          
+    // refresh mobile_data in db-tenancy agreement table for this memid
+    const tagsRefreshed = await refreshUserTags({ token, memid: id })
+    console.log('app.js, tagsRefreshed:', tagsRefreshed)
+
     const tagData = await getTagData(id, token)
     store.dispatch(updateTags(tagData))  
   }
