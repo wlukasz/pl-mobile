@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
     // if (token !== null) is NOT WORKING! so I'm using length > 4 b/c null.length = 4 and token.length = 211
     // if (token.length > 4) {
     if (token !== 'null' && token !== 'undefined') {
-      await jwt.verify(token, 'secretphrase', (error, decoded) => {
+      await jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
         console.log('middleware/auth.js error:', error)
         console.log('middleware/auth.js decoded:', decoded)
         if (error) {

@@ -22,7 +22,7 @@ const postProcess = (body, dbResult) => {
           if (isAuthenticated) {
             const { password, group_id, ...rest } = dbResult[0]
             if (group_id === 2 ) { //tenant
-              const token = jwt.sign({ ...rest }, 'secretphrase')
+              const token = jwt.sign({ ...rest }, process.env.JWT_SECRET)
               console.log('postProcess, authUser, token:', token)
               return { isAuthenticated, token, ...rest }
             } else {

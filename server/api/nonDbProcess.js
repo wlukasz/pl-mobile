@@ -10,7 +10,7 @@ const nonDbProcess = async (req, body) => {
       console.log('nonDbProcess, authUser token.length:', token.length)
     
       if (token) {
-        return await jwt.verify(token, 'secretphrase', (error, decoded) => {
+        return await jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
           if (error) {
             return {}
           }
@@ -26,7 +26,7 @@ const nonDbProcess = async (req, body) => {
 
     case 'renewToken':
       const { reqName, nonDbProcess, ...rest } = body
-      const renewedToken = jwt.sign({ ...rest }, 'secretphrase')
+      const renewedToken = jwt.sign({ ...rest }, process.env.JWT_SECRET)
       return { token: renewedToken }
   
   default:

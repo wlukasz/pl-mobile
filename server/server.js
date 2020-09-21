@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config({ path: '.env.development' })
+}
+
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -11,10 +15,6 @@ const getPoliTransaction = require('./api/getPoliTransaction')
 const refreshUserTags = require('./api/refreshUserTags')
 const auth = require('./middleware/auth')
 
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
-} 
-
 const app = express()
 const port = process.env.PORT
 
@@ -24,7 +24,7 @@ app.use(bodyParser.json({
   inflate: true,
   type: 'application/json'
 }))
-  
+
 // Generic POST request
 app.post('/api', auth, async (req, res) => {
   console.log('req.body in server:', req.body)
